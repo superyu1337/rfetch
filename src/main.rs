@@ -1,7 +1,6 @@
 use std::io::{Write, Result};
 use sysinfo::{ProcessorExt, System, SystemExt};
 use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
-use users::{Users, UsersCache};
 
 fn write(color: Option<Color>, input: &str) -> Result<()> {
     let bufwtr = BufferWriter::stderr(ColorChoice::Auto);
@@ -29,9 +28,8 @@ fn main() {
     let cpu0 = &sys.processors()[0];
     let uptime_string = get_uptime_str(sys.uptime());
     let mem_string = format!("{} MB / {} MB", sys.used_memory() / 1000, sys.total_memory() / 1000);
-    let user = users::get_user_by_uid(users::get_current_uid()).unwrap();
 
-    write(Some(Color::Magenta), user.name().to_str().unwrap_or("user")).unwrap();
+    write(Some(Color::Magenta), &whoami::username()).unwrap();
     write(Some(Color::White), "@").unwrap();
     write(Some(Color::Magenta), &sys.host_name().unwrap()).unwrap();
 
