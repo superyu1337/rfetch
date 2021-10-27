@@ -1,5 +1,5 @@
 use std::io::{Write, Result};
-use sysinfo::{ProcessorExt, System, SystemExt};
+use sysinfo::{ProcessorExt, RefreshKind, System, SystemExt};
 use termcolor::{BufferWriter, Color, ColorChoice, ColorSpec, WriteColor};
 
 fn write(color: Option<Color>, input: &str) -> Result<()> {
@@ -23,8 +23,11 @@ fn get_uptime_str(uptime: u64) -> String {
 }
 
 fn main() {
-    let mut sys = System::new_all();
-    sys.refresh_all();
+    let specifics = RefreshKind::new()
+        .with_cpu()
+        .with_memory();
+    
+    let sys = System::new_with_specifics(specifics);
     let cpu0 = &sys.processors()[0];
     let uptime_string = get_uptime_str(sys.uptime());
     let mem_string = format!("{} MB / {} MB", sys.used_memory() / 1000, sys.total_memory() / 1000);
