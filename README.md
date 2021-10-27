@@ -1,6 +1,5 @@
 # rfetch
-pfetch clone written in rust.
-it's meant to be cross platform, there will be a windows build once I figured out how to get the current user on all platforms.
+cross-platform pfetch clone written in rust.
 
 example output:
 ```zsh
