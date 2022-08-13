@@ -41,4 +41,5 @@ fn main() {
     write_column("\nuptime    ", &uptime_string);
     write_column("\ncpu       ", &cpu0.brand());
     write_column("\nmemory    ", &mem_string);
+    print!("\n");
 }
